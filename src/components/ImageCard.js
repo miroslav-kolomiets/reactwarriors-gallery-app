@@ -11,15 +11,23 @@ import {
 const ImageCard = props => {
   const card = props.card;
   return (
-    <div className="card-wrapper">
+    <div className="card-wrapper" key={card.id}>
       <Card>
-        <CardImg top width="100%" src={card.data.thumbnail} alt="Card image" />
         <CardBody>
-          <CardTitle>{card.data.title}</CardTitle>
+          {card.thumbnail.length > 10 && (
+            <CardImg
+              top
+              width="100%"
+              src={card.thumbnail}
+              alt="Card image"
+            />
+          )}
+
+          <CardTitle>{card.title}</CardTitle>
           <CardSubtitle>
-            Number of comments: {card.data.num_comments}
+            Number of comments: {card.num_comments}
           </CardSubtitle>
-          <NavLink href={`https://www.reddit.com/${card.data.permalink}`}>
+          <NavLink href={`https://www.reddit.com/${card.permalink}`}>
             Link
           </NavLink>
         </CardBody>
