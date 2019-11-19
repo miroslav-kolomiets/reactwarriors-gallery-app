@@ -38,10 +38,8 @@ export default class ImageGallery extends React.Component {
     this.getData();
   }
 
-  handleChange = event => {
+  filterData = (range) => {
     const data = this.state.data;
-    const range = event.target.value;
-
     const filteredData = data.filter(item => {
       if (item.num_comments > range) {
         return item;
@@ -49,8 +47,15 @@ export default class ImageGallery extends React.Component {
     });
 
     this.setState({
-      range: event.target.value,
       filteredData: filteredData
+    });
+  };
+
+  handleChange = event => {
+    const range = event.target.value;
+    this.filterData(range);
+    this.setState({
+      range: event.target.value,
     });
   };
 
@@ -58,7 +63,9 @@ export default class ImageGallery extends React.Component {
     if (!this.state.refreshing) {
       const intervalId = setInterval(() => {
         this.setState({
-          data: []
+          data: [],
+          filteredData: [],
+          range: 0,
         });
         this.getData();
       }, 3000);
